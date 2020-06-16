@@ -5,7 +5,6 @@ chardet==3.0.4
 Click==7.0
 cs50==4.0.2
 Flask==1.1.1
-Flask-Session==0.3.1
 gunicorn==19.9.0
 idna==2.8
 itsdangerous==1.1.0
@@ -17,3 +16,8 @@ sqlparse==0.3.0
 termcolor==1.1.0
 urllib3==1.25.5
 Werkzeug==0.16.0
+pandas
+numpy
+pickle
+scipy.stats
+statsmodels
