@@ -22,7 +22,7 @@ def build():
             file.save(destination)
             csv_destination = destination.replace(".csv","")
             # return csv_destination
-            qsar_mlr.qsar_web(csv_destination,1,1)
+            qsar_mlr.qsar_web(csv_destination,1,3)
             output = open("output.txt", "r")
             return render_template("build.html",message="Success", output=output.read())
             # return output.read().replace("\n", "<br>")
