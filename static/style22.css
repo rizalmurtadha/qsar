@@ -1,0 +1,22 @@
+.linkbtn{
+    float: right;
+}
+.outl{
+    outline-style: solid;
+}
+
+.pilihan:hover {
+    text-decoration: none;
+    background-color: rgb(71, 156, 236);
+    outline-style: solid;
+    outline-color: blue;
+    color: black;
+}
+
+.pilihan {
+    text-decoration: none;
+    color: black;
+}
+.free_space{
+    margin: 150px;
+}

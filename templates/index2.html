@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block content %}
+<div class="container">
+    <a href="{{ url_for('build') }}" class="pilihan">
+    <div  class="card pilihan" >
+        <div class="card-body">
+            <h1 class="card-title display-4"><b>Build model</b></h1>
+            <p class="card-text">Description</p>
+        </div>
+    </div>
+    </a>
+    <a href="#" class="pilihan">
+    <div class="card pilihan" >
+        <div class="card-body">
+            <h2 class="card-title display-4"><b>Prediction</b></h2>
+            <p class="card-text">Description</p>
+        </div>
+    </div>
+    </a>
+</div>
+{% endblock %}
