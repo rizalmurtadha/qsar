@@ -142,9 +142,9 @@ def qsar_web(path,calc,model):
             file.write("f(x) = {:.2f} + ".format(coeff_[0]))
             for j in range(len(desc_)):
                 if j == (len(desc_)-1):
-                    file.write("{} {}\n".format(coeff_[-1], desc_[-1]))
+                    file.write("{:.2f} {}\n".format(coeff_[-1], desc_[-1]))
                 else:
-                    file.write("{} {} + ".format(coeff_[j+1], desc_[j]))
+                    file.write("{:.2f} {} + ".format(coeff_[j+1], desc_[j]))
             file.write("\n")
             file.write("Validation parameter:\n")
             file.write("r2 = {:.2f}\n".format(best_param.loc[i,"r2"]))
