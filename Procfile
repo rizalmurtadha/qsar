@@ -1,2 +1,2 @@
-web: gunicorn -b :$PORT app:QSAR
+web gunicorn QSAR:app
 
