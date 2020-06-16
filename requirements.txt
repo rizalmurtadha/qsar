@@ -18,6 +18,5 @@ urllib3==1.25.5
 Werkzeug==0.16.0
 pandas
 numpy
-pickle
 scipy.stats
 statsmodels
