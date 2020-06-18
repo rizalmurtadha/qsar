@@ -30,7 +30,7 @@ def build():
                 file = request.files["file"]
                 destination = "/".join([target,file.filename])
                 file.save(destination)
-                maxModel = count_clmn(file.filename)
+                maxModel = count_clmn(destination)
                 return render_template("build.html",selected="1", pass_name=destination, maxmodel=maxModel, file_name=file.filename)
         elif gen=="1":
             # Generate model
