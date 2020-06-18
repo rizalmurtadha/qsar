@@ -33,6 +33,7 @@
             </select><br>
             <p>{{pass_name}}</p>
             <input type="hidden" name="destination" value="{{pass_name}}">
+            <!-- <input type="hidden" name="n_model" value="{{maxmodel}}"> -->
             <button type="submit" class="btn btn-primary" name="generate" value=0>Pilih ulang file</button>
             <button type="submit" class="btn btn-primary" name="generate" value=1>Generate model</button>
 
@@ -50,9 +51,11 @@
             <a href="{{ url_for('download_filse', filename='output.txt') }}">
                 <button type="button" class="btn btn-link">Output</button>
             </a><br>
-            <a href="{{ url_for('download_filse', filename='model_1.p') }}">
-                <button type="button" class="btn btn-link">Model</button>
+            {% for i in range(n_model):%}
+            <a href="{{ url_for('download_filse', filename='model_')}}{{i+1}}{{'.p'}}">
+                <button type="button" class="btn btn-link">Model {{i+1}}</button>
             </a>
+            {% endfor %}
         </section>
     {% endif %}
     <section class="free_space">

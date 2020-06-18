@@ -39,7 +39,7 @@ def build():
             bestModel = request.form['bestModel']
             qsar_mlr.qsar_web(csv_destination,1,bestModel)
             output = open("output.txt", "r")
-            return render_template("build.html",message="Success",selected="0", output=output.read())
+            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel))
     return render_template("build.html",selected="0", message="",output="-")
 
 @app.route('/build/<string:filename>')
