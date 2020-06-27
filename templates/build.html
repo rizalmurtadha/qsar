@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Build Model{% endblock %}
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('build') }}"><h4>Build</h4></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('prediction') }}"><h4>Prediction</h4></a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
 {% block content %}
 <div class="container">
     <section>
@@ -46,15 +58,23 @@
             <h2>Result</h2>
             <p>{{(output|escape).replace("\n", '<br>'|safe)}}</p>
         </section>
+        <section>
+            <h4>Plot</h4>
+            <img src="{{ url_for('download_filse', filename='plot.jpg') }}" >
+            <br><br>
+            <a href="{{ url_for('download_filse', filename='plot.jpg') }}">
+                <button type="button" class="btn btn-link">Download Image</button>
+            </a><br><br>
+        </section>
         <section class="container">
             <h2>Download Model</h2>
             <a href="{{ url_for('download_filse', filename='output.txt') }}">
                 <button type="button" class="btn btn-link">Overview</button>
             </a>
-            <a href="{{ url_for('download_filse', filename='best.p') }}">
-                <button type="button" class="btn btn-link">Best</button>
+            <a href="{{ url_for('download_filse', filename='model_1.p') }}">
+                <button type="button" class="btn btn-link">Model 1</button>
             </a><br>
-            {% for i in range(n_model):%}
+            {% for i in range(1,n_model):%}
             <a href="{{ url_for('download_filse', filename='model_')}}{{i+1}}{{'.p'}}">
                 <button type="button" class="btn btn-link">Model {{i+1}}</button>
             </a>

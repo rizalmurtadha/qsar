@@ -1,10 +1,12 @@
 from flask import Flask, redirect, url_for, render_template, request, send_from_directory
 import qsar_mlr
+import createPlot
 import os
 import pandas
 import csv
 
-app = Flask(__name__)
+app = Flask(__name__) 
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -39,7 +41,12 @@ def build():
             bestModel = request.form['bestModel']
             qsar_mlr.qsar_web(csv_destination,1,bestModel)
             output = open("output.txt", "r")
-            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel))
+            qsar_mlr.qsar_web(csv_destination,2,'model_1')
+            csv_pred = "/".join([APP_ROOT,'model_1_pred'])
+            createPlot.create(csv_pred)
+            plotsrc = "/".join([APP_ROOT,'plot.png'])
+            # return plotsrc
+            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel),plot=plotsrc)
     return render_template("build.html",selected="0", message="",output="-")
 
 @app.route("/predict",methods=["GET", "POST"])
@@ -52,13 +59,13 @@ def prediction():
         else:
             fileCsv = request.files["fileCsv"]
             fileModel = request.files["fileModel"]
-            csvDestination = "/".join([target,fileCsv.filename])
+            csv_destination = "/".join([target,fileCsv.filename])
             modelDestination = "/".join([target,fileModel.filename])
-            fileCsv.save(csvDestination)
-            fileModel.save(modelDestination)
-            csvDestination = csvDestination.replace(".csv","")
+            fileCsv.save(csv_destination)
+            fileModel.save(csv_destination)
+            csv_destination = csv_destination.replace(".csv","")
             model_Destination = str(fileModel.filename).replace(".p","")
-            qsar_mlr.qsar_web(csvDestination,2,model_Destination)
+            qsar_mlr.qsar_web(csv_destination,2,model_Destination)
             resultname = (fileModel.filename).replace(".p","_pred.csv")
             return render_template("predict.html",message="Success",name=resultname)
     return render_template("predict.html",messaeg="-")
@@ -67,8 +74,16 @@ def prediction():
 @app.route('/build/<string:filename>')
 def download_filse(filename):
     # return folder
-    return send_from_directory(os.path.join(APP_ROOT),
-                               filename=filename, as_attachment=True)
+    try:
+        response = send_from_directory(os.path.join(APP_ROOT),
+                                       filename=filename)
+        response.cache_control.max_age = 60  # e.g. 1 minute
+        return response
+
+    except:
+        return str("asd")
+    # return send_from_directory(os.path.join(APP_ROOT),
+    #                            filename=filename, as_attachment=True, cache)
 
 def count_clmn(filename):
     with open(filename) as csvfile:
@@ -76,7 +91,17 @@ def count_clmn(filename):
         for row in readCSV:
             return(len(row))
 
-
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 if __name__ == "__main__":
     app.run(debug=True)

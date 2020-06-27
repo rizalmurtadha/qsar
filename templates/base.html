@@ -7,6 +7,18 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style22.css')}}">        
     </head>
     <body>
+        
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: slategray;">
+            <div class="container" >
+                <a class="navbar-brand" href="{{ url_for('home') }}"><h2>QSAR</h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% block navbar %}
+                {% endblock %}
+            </div>
+        </nav>
+        
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
               <h1 class="display-4">QSAR Prediction by Backward Elimination<br>Least Square</h1>

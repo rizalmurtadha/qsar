@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Prediction{% endblock %}
+{% block navbar %}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('build') }}"><h4>Build</h4></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('prediction') }}"><h4>Prediction</h4></a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
 {% block content %}
 <div class="container">
     <section>

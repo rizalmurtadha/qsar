@@ -164,7 +164,7 @@ def qsar_web(path,calc,model):
         best_desc = sel_desc_list[idx]
         pickle.dump(best_model, open("./best_model.p", "wb"))
         pickle.dump(best_desc, open("./best_desc.p", "wb"))
-        pickle.dump([best_desc,best_model], open("./best.p", "wb"))
+        pickle.dump([best_desc,best_model], open("./model_1.p", "wb"))
 
         # In[585]:
 
