@@ -49,7 +49,7 @@ def qsar_web(path,calc,model):
     elif calc_type == 2:
         print("\n")
         print("Model name")
-        model_name = input(":")
+        model_name = model
 
     print("Loading the data set ...")
     data_set = pd.read_csv("{}.csv".format(path))
@@ -164,7 +164,7 @@ def qsar_web(path,calc,model):
         best_desc = sel_desc_list[idx]
         pickle.dump(best_model, open("./best_model.p", "wb"))
         pickle.dump(best_desc, open("./best_desc.p", "wb"))
-
+        pickle.dump([best_desc,best_model], open("./best.p", "wb"))
 
         # In[585]:
 
@@ -176,7 +176,7 @@ def qsar_web(path,calc,model):
     elif (calc_type == 2):
 
         print("Predicting activity ...")
-        [desc, model] = pickle.load(open("./{}.p".format(model_name), "rb"))
+        [desc, model] = pickle.load(open("{}.p".format(model_name), "rb"))
         X_sel = data_set.loc[:,desc]
         const = {"constant": [1]*X_sel.shape[0]}
         const_df = pd.DataFrame(const)

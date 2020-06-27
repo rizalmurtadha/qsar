@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Prediction{% endblock %}
+{% block content %}
+<div class="container">
+    <section>
+        <h1 class="display-4"><b>Prediction</b></h1>
+        <p class="">Description</p><br>
+        <form action="{{ url_for('prediction') }}" method="POST" enctype=multipart/form-data>
+            <div class="form-group">
+                <label  for="fileinput">- Select csv file - </label><br>
+                <input type="file"  class="form-control-file" accept=".csv"  name="fileCsv"  required > 
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+            <div class="form-group">
+                <label  for="fileinput">- Select model - </label><br>
+                <input type="file"  class="form-control-file" accept=".p"  name="fileModel"  required > 
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+            <button type="submit" class="btn btn-primary" value="send">Upload</button>
+        </form>
+    </section>
+    {% if (message=="Success") :%}
+        <section>
+            <h2>Result</h2>
+            <!-- <p>{{(output|escape).replace("\n", '<br>'|safe)}}</p> -->
+        </section>
+        <section class="container">
+            <h3>Download </h3>
+            <a href="{{ url_for('download_filse', filename='')}}{{name}}">
+                <button type="button" class="btn btn-link">{{name}}</button>
+            </a>
+        </section>
+    {% endif %}
+    <section class="free_space">
+        
+    </section>
+</div>
+{% endblock %}

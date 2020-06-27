@@ -42,6 +42,28 @@ def build():
             return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel))
     return render_template("build.html",selected="0", message="",output="-")
 
+@app.route("/predict",methods=["GET", "POST"])
+def prediction():
+    target = os.path.join(APP_ROOT, 'uploads/')
+    
+    if request.method=="POST":
+        if request.files['fileCsv'].filename == '' :
+                return render_template("predict.html",message="Please choose CSV file")
+        else:
+            fileCsv = request.files["fileCsv"]
+            fileModel = request.files["fileModel"]
+            csvDestination = "/".join([target,fileCsv.filename])
+            modelDestination = "/".join([target,fileModel.filename])
+            fileCsv.save(csvDestination)
+            fileModel.save(modelDestination)
+            csvDestination = csvDestination.replace(".csv","")
+            model_Destination = str(fileModel.filename).replace(".p","")
+            qsar_mlr.qsar_web(csvDestination,2,model_Destination)
+            resultname = (fileModel.filename).replace(".p","_pred.csv")
+            return render_template("predict.html",message="Success",name=resultname)
+    return render_template("predict.html",messaeg="-")
+
+
 @app.route('/build/<string:filename>')
 def download_filse(filename):
     # return folder

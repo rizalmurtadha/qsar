@@ -49,7 +49,10 @@
         <section class="container">
             <h2>Download Model</h2>
             <a href="{{ url_for('download_filse', filename='output.txt') }}">
-                <button type="button" class="btn btn-link">Output</button>
+                <button type="button" class="btn btn-link">Overview</button>
+            </a>
+            <a href="{{ url_for('download_filse', filename='best.p') }}">
+                <button type="button" class="btn btn-link">Best</button>
             </a><br>
             {% for i in range(n_model):%}
             <a href="{{ url_for('download_filse', filename='model_')}}{{i+1}}{{'.p'}}">
