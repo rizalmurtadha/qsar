@@ -18,6 +18,6 @@ def create(name):
     plt.legend(loc='best')
     # plt.show()
     # plt.show()
-    plt.savefig('plot.jpg')
+    plt.savefig('plot.png')
     plt.clf()
     plt.close()
