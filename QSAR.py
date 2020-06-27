@@ -41,12 +41,14 @@ def build():
             bestModel = request.form['bestModel']
             qsar_mlr.qsar_web(csv_destination,1,bestModel)
             output = open("output.txt", "r")
-            qsar_mlr.qsar_web(csv_destination,2,'model_1')
-            csv_pred = "/".join([APP_ROOT,'model_1_pred'])
-            createPlot.create(csv_pred)
-            plotsrc = "/".join([APP_ROOT,'plot.png'])
+            for i in range(int(bestModel)):
+
+                qsar_mlr.qsar_web(csv_destination,2,'model_'+str(i+1))
+                csv_pred = "/".join([APP_ROOT,'model_'+str(i+1)+'_pred'])
+                createPlot.create(csv_pred,i)
+            plotsrc = "/".join([APP_ROOT,'plot_'])
             # return plotsrc
-            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel),plot=plotsrc)
+            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel))
     return render_template("build.html",selected="0", message="",output="-")
 
 @app.route("/predict",methods=["GET", "POST"])

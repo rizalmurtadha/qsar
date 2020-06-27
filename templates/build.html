@@ -59,12 +59,17 @@
             <p>{{(output|escape).replace("\n", '<br>'|safe)}}</p>
         </section>
         <section>
-            <h4>Plot</h4>
-            <img src="{{ url_for('download_filse', filename='plot.png') }}" >
+            <h2>Plot</h2>
+            {% for i in range(n_model):%}
+            <img src="{{ url_for('download_filse', filename='plot_')}}{{i+1}}{{'.png'}}" >
             <br><br>
-            <a href="{{ url_for('download_filse', filename='plot.png') }}">
-                <button type="button" class="btn btn-link">Download Image</button>
-            </a><br><br>
+            {% endfor %}
+            {% for i in range(n_model):%}
+            <a href="{{ url_for('download_filse', filename='plot_')}}{{i+1}}{{'.png'}}">
+                <button type="button" class="btn btn-link">Download Image {{i+1}}</button>
+            </a>
+            {% endfor %}
+            <br><br>
         </section>
         <section class="container">
             <h2>Download Model</h2>
