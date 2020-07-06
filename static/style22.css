@@ -13,6 +13,22 @@
     color: black;
 }
 
+.desc{
+    min-height: 200px;
+}
+
+.card{
+    margin-bottom: 40px;
+}
+
+.mainmenu{
+    min-height: 60vh;
+}
+
+body{
+    margin: 0;
+}
+
 .pilihan {
     text-decoration: none;
     color: black;

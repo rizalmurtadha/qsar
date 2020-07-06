@@ -40,7 +40,7 @@ def build():
             csv_destination = destination.replace(".csv","")
             bestModel = request.form['bestModel']
             qsar_mlr.qsar_web(csv_destination,1,bestModel)
-            output = open("output.txt", "r")
+            output = readoverview()
             for i in range(int(bestModel)):
 
                 qsar_mlr.qsar_web(csv_destination,2,'model_'+str(i+1))
@@ -48,7 +48,7 @@ def build():
                 createPlot.create(csv_pred,i)
             plotsrc = "/".join([APP_ROOT,'plot_'])
             # return plotsrc
-            return render_template("build.html",message="Success",selected="0", output=output.read(), n_model=int(bestModel))
+            return render_template("build.html",message="Success",selected="0", output=output, n_model=int(bestModel))
     return render_template("build.html",selected="0", message="",output="-")
 
 @app.route("/predict",methods=["GET", "POST"])
@@ -64,7 +64,7 @@ def prediction():
             csv_destination = "/".join([target,fileCsv.filename])
             modelDestination = "/".join([target,fileModel.filename])
             fileCsv.save(csv_destination)
-            fileModel.save(csv_destination)
+            fileModel.save(modelDestination)
             csv_destination = csv_destination.replace(".csv","")
             model_Destination = str(fileModel.filename).replace(".p","")
             qsar_mlr.qsar_web(csv_destination,2,model_Destination)
@@ -86,6 +86,11 @@ def download_filse(filename):
         return str("asd")
     # return send_from_directory(os.path.join(APP_ROOT),
     #                            filename=filename, as_attachment=True, cache)
+
+def readoverview():
+    with open("output.txt", "r") as input:
+        overview = input.read().split("\n\n\n")
+    return overview
 
 def count_clmn(filename):
     with open(filename) as csvfile:

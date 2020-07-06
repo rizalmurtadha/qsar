@@ -4,32 +4,42 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('build') }}"><h4>Build</h4></a>
+            <a class="nav-link" href="{{ url_for('build') }}"><h5>Build</h5></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('prediction') }}"><h4>Prediction</h4></a>
+            <a class="nav-link" href="{{ url_for('prediction') }}"><h5>Prediction</h5></a>
         </li>
     </ul>
 </div>
 {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container shadow-sm mainmenu">
     <section>
-        <h1 class="display-4"><b>Prediction</b></h1>
-        <p class="">Description</p><br>
-        <form action="{{ url_for('prediction') }}" method="POST" enctype=multipart/form-data>
-            <div class="form-group">
-                <label  for="fileinput">- Select csv file - </label><br>
-                <input type="file"  class="form-control-file" accept=".csv"  name="fileCsv"  required > 
-                <div class="invalid-feedback">Example invalid custom file feedback</div>
+        <div class="row desc">
+            <div class="col-7">
+                <h1 class="display-4"><b>Prediction</b></h1>
+                <p class="">Description</p><br>
             </div>
-            <div class="form-group">
-                <label  for="fileinput">- Select model - </label><br>
-                <input type="file"  class="form-control-file" accept=".p"  name="fileModel"  required > 
-                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            
+            {% if (message!="Success") :%}
+            <div class="col-5">
+                <form action="{{ url_for('prediction') }}" method="POST" enctype=multipart/form-data>
+                    <h5>Select File</h5>
+                    <div class="custom-file">
+                        <input type="file"  class="custom-file-input" accept=".csv"  name="fileCsv"  id="customFile" required >
+                        <label class="custom-file-label" for="customFile">- Select csv file - </label>
+                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                    </div><br><br>
+                    <div class="custom-file">
+                        <input type="file"  class="custom-file-input" accept=".p"  name="fileModel"  id="customFile" required >
+                        <label class="custom-file-label" for="customFile">- Select .p file - </label>
+                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                    </div><br><br>
+                    <button type="submit" class="btn btn-primary" value="send">Upload</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary" value="send">Upload</button>
-        </form>
+            {% endif%}
+        </div>
     </section>
     {% if (message=="Success") :%}
         <section>
@@ -46,5 +56,12 @@
     <section class="free_space">
         
     </section>
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 </div>
 {% endblock %}
