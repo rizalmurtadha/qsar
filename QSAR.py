@@ -39,16 +39,18 @@ def build():
             destination = request.form['destination']
             csv_destination = destination.replace(".csv","")
             bestModel = request.form['bestModel']
-            qsar_mlr.qsar_web(csv_destination,1,bestModel)
-            output = readoverview()
-            for i in range(int(bestModel)):
-
-                qsar_mlr.qsar_web(csv_destination,2,'model_'+str(i+1))
-                csv_pred = "/".join([APP_ROOT,'model_'+str(i+1)+'_pred'])
-                createPlot.create(csv_pred,i)
-            plotsrc = "/".join([APP_ROOT,'plot_'])
-            # return plotsrc
-            return render_template("build.html",message="Success",selected="0", output=output, n_model=int(bestModel))
+            try:
+                qsar_mlr.qsar_web(csv_destination,1,bestModel)
+                output = readoverview()
+                for i in range(int(bestModel)):
+                    qsar_mlr.qsar_web(csv_destination,2,'model_'+str(i+1))
+                    csv_pred = "/".join([APP_ROOT,'model_'+str(i+1)+'_pred'])
+                    createPlot.create(csv_pred,i)
+                plotsrc = "/".join([APP_ROOT,'plot_'])
+                # return plotsrc
+                return render_template("build.html",message="Success",selected="0", output=output, n_model=int(bestModel))
+            except:
+                return render_template("build.html",message="error",selected="0")
     return render_template("build.html",selected="0", message="",output="-")
 
 @app.route("/predict",methods=["GET", "POST"])
@@ -56,6 +58,10 @@ def prediction():
     target = os.path.join(APP_ROOT, 'uploads/')
     
     if request.method=="POST":
+        try:
+            request.files['fileCsv']
+        except:
+            return render_template("predict.html",messaeg="-")
         if request.files['fileCsv'].filename == '' :
                 return render_template("predict.html",message="Please choose CSV file")
         else:
@@ -67,9 +73,12 @@ def prediction():
             fileModel.save(modelDestination)
             csv_destination = csv_destination.replace(".csv","")
             model_Destination = str(fileModel.filename).replace(".p","")
-            qsar_mlr.qsar_web(csv_destination,2,model_Destination)
-            resultname = (fileModel.filename).replace(".p","_pred.csv")
-            return render_template("predict.html",message="Success",name=resultname)
+            try:
+                qsar_mlr.qsar_web(csv_destination,2,model_Destination)
+                resultname = (fileModel.filename).replace(".p","_pred.csv")
+                return render_template("predict.html",message="Success",name=resultname)
+            except:
+                return render_template("predict.html",message="error")
     return render_template("predict.html",messaeg="-")
 
 
@@ -78,7 +87,7 @@ def download_filse(filename):
     # return folder
     # try:
     #     response = send_from_directory(os.path.join(APP_ROOT),
-    #                                    filename=filename,as_attachment=True)
+    #                                    filename=filename)
     #     response.cache_control.max_age = 60  # e.g. 1 minute
     #     return response
 

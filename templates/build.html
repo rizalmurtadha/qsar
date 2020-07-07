@@ -24,6 +24,11 @@
         {% if selected=="0" :%}
             {% if (message!="Success") :%}
             <div class="col-5">
+                {% if (message=="error"): %}
+                    <h3>Input Error</h3>
+                    <h3>please choose the correct file</h3>
+                    <small>- CSV file with a minimum of 3 columns -</small><br> <br>
+                {% endif %}
                 <form action="{{ url_for('build') }}" method="POST" enctype=multipart/form-data>
                     <h5>Select File</h5>
                     <div class="custom-file">
@@ -35,6 +40,13 @@
                     <button type="submit" class="btn btn-primary" value="send">Upload</button>
                 </form>
             </div>
+            {% else:%}
+            <div class="d-flex col-5 justify-content-center">
+                <form action="{{ url_for('build') }}" method="POST" enctype=multipart/form-data>
+                    <input type="hidden" name="generate" value=0>
+                    <button type="submit" class="btn btn-primary" value="send">Build another model</button>
+                </form>
+            </div>      
             {% endif%}
         </div>
         {% else: %}
