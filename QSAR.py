@@ -76,16 +76,16 @@ def prediction():
 @app.route('/build/<string:filename>')
 def download_filse(filename):
     # return folder
-    try:
-        response = send_from_directory(os.path.join(APP_ROOT),
-                                       filename=filename)
-        response.cache_control.max_age = 60  # e.g. 1 minute
-        return response
+    # try:
+    #     response = send_from_directory(os.path.join(APP_ROOT),
+    #                                    filename=filename,as_attachment=True)
+    #     response.cache_control.max_age = 60  # e.g. 1 minute
+    #     return response
 
-    except:
-        return str("asd")
-    # return send_from_directory(os.path.join(APP_ROOT),
-    #                            filename=filename, as_attachment=True, cache)
+    # except:
+    #     return str("asd")
+    return send_from_directory(os.path.join(APP_ROOT),
+                               filename=filename, as_attachment=True)
 
 def readoverview():
     with open("output.txt", "r") as input:
