@@ -24,17 +24,19 @@
             {% if (message!="Success") :%}
             <div class="col-5">
                 {% if (message=="error"): %}
-                    <h3>Input Error</h3>
-                    <h3>CSV files and models do not match</h3>
+                    <h5>Input Error</h5>
+                    <h5>CSV files and models do not match</h5>
                     <small>- make sure the model used matches the CSV file -</small><br> <br>
                 {% endif %}
                 <form action="{{ url_for('prediction') }}" method="POST" enctype=multipart/form-data>
-                    <h5>Select File</h5>
+                    <!-- <h3>Select File</h3> -->
+                    <h5>Select data set file</h5>
                     <div class="custom-file">
                         <input type="file"  class="custom-file-input" accept=".csv"  name="fileCsv"  id="customFile" required >
                         <label class="custom-file-label" for="customFile">- Select csv file - </label>
                         <div class="invalid-feedback">Example invalid custom file feedback</div>
                     </div><br><br>
+                    <h5>Select model file</h5>
                     <div class="custom-file">
                         <input type="file"  class="custom-file-input" accept=".p"  name="fileModel"  id="customFile" required >
                         <label class="custom-file-label" for="customFile">- Select .p file - </label>

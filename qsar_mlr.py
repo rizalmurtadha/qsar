@@ -189,6 +189,11 @@ def qsar_web(path,calc,model):
         print("Storing the results ...")
         tmp = data_set.iloc[:,-1]
         result = pd.concat([tmp,pred_df], axis=1)
+        list_col = list(result.columns)
+        actual = list_col[0] 
+        result = result.rename(columns={actual : 'actual'})
+        result['residual'] = abs(result['actual'] - result['prediction'])
+        result = result.round(3)
         result.to_csv("{}_pred.csv".format(model_name), index=None)
         print("Program normally terminated ...")
 
