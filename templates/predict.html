@@ -9,6 +9,9 @@
         <li class="nav-item active">
             <a class="nav-link" href="{{ url_for('prediction') }}"><h5>Prediction</h5></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('methods') }}"><h5>Methods</h5></a>
+        </li>
     </ul>
 </div>
 {% endblock %}
@@ -26,7 +29,7 @@
                 {% if (message=="error"): %}
                     <h5>Input Error</h5>
                     <h5>CSV files and models do not match</h5>
-                    <small>- make sure the model used matches the CSV file -</small><br> <br>
+                    <small>- make sure the data set dan model file are compatible -</small><br> <br>
                 {% endif %}
                 <form action="{{ url_for('prediction') }}" method="POST" enctype=multipart/form-data>
                     <!-- <h3>Select File</h3> -->
@@ -39,7 +42,7 @@
                     <h5>Select model file</h5>
                     <div class="custom-file">
                         <input type="file"  class="custom-file-input" accept=".p"  name="fileModel"  id="customFile" required >
-                        <label class="custom-file-label" for="customFile">- Select .p file - </label>
+                        <label class="custom-file-label" for="customFile">- Select pickle file - </label>
                         <div class="invalid-feedback">Example invalid custom file feedback</div>
                     </div><br><br>
                     <button type="submit" class="btn btn-primary" value="send">Upload</button>
@@ -60,8 +63,29 @@
             <h2>Result</h2>
             <!-- <p>{{(output|escape).replace("\n", '<br>'|safe)}}</p> -->
         </section>
+        <section>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Actual</th>
+                        <th scope="col">Prediction</th>
+                        <th scope="col">residual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(5): %}   
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{head[0][i]}}</td>
+                        <td>{{head[1][i]}}</td>
+                        <td>{{head[2][i]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+        </section>
         <section class="container">
-            <h3>Download </h3>
             <a href="{{ url_for('download_filse', filename='')}}{{name}}">
                 <button type="button" class="btn btn-link">{{name}}</button>
             </a>

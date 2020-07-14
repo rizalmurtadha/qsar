@@ -76,11 +76,15 @@ def prediction():
             try:
                 qsar_mlr.qsar_web(csv_destination,2,model_Destination)
                 resultname = (fileModel.filename).replace(".p","_pred.csv")
-                return render_template("predict.html",message="Success",name=resultname)
+                head = readresulthead(resultname)
+                return render_template("predict.html",message="Success",name=resultname,head=head)
             except:
                 return render_template("predict.html",message="error")
     return render_template("predict.html",messaeg="-")
 
+@app.route("/methods",methods=["GET", "POST"])
+def methods():
+    return render_template("methods.html",messaeg="-")
 
 @app.route('/build/<string:filename>')
 def download_filse(filename):
@@ -100,6 +104,15 @@ def readoverview():
     with open("output.txt", "r") as input:
         overview = input.read().split("\n\n\n")
     return overview
+
+def readresulthead(name):
+    df = pandas.read_csv(name)
+    head = df.head().round(3)
+    actual = head['actual'].tolist()
+    prediction = head['prediction'].tolist()
+    residual = head['residual'].tolist()
+    data = [actual,prediction,residual]
+    return(data)
 
 def count_clmn(filename):
     with open(filename) as csvfile:

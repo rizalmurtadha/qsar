@@ -9,6 +9,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ url_for('prediction') }}"><h5>Prediction</h5></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('methods') }}"><h5>Methods</h5></a>
+        </li>
     </ul>
 </div>
 {% endblock %}
@@ -25,8 +28,8 @@
             {% if (message!="Success") :%}
             <div class="col-5">
                 {% if (message=="error"): %}
-                    <h3>Input Error</h3>
-                    <h3>please choose the correct file</h3>
+                    <h5>Input Error</h5>
+                    <h5>please choose the correct file</h5>
                     <small>- CSV file with a minimum of 3 columns -</small><br> <br>
                 {% endif %}
                 <form action="{{ url_for('build') }}" method="POST" enctype=multipart/form-data>
